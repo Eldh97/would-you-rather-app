@@ -7,5 +7,8 @@ const MenuStyles = styled.ul`
   justify-content: space-around;
   align-items: center;
   list-style: none;
+  .active {
+    border-bottom:.2rem solid #fff; 
+  }
 `;
 export default MenuStyles;

@@ -14,6 +14,7 @@ class Nav extends Component {
   handleLogin() {
     
   }
+  
   handleLogout() {
     this.props.dispatch(authedUser(null));
   }
@@ -23,13 +24,13 @@ class Nav extends Component {
       <NavStyles>
         <MenuStyles>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink activeClassName="active" exact to="/">Home</NavLink>
           </li>
           <li>
-            <NavLink to="new-question">New Question</NavLink>
+            <NavLink activeClassName="active" to="/new-question">New Question</NavLink>
           </li>
           <li>
-            <NavLink to="board">Loader Board</NavLink>
+            <NavLink to="/board">Loader Board</NavLink>
           </li>
           <li>Hello {this.props.user}</li>
           {user ? (
