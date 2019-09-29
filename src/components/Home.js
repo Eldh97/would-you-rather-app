@@ -57,7 +57,7 @@ class Home extends Component {
             this.props.questions.map((q, i, array) => {
               console.log(q);                
               if(q.optionOne.votes.includes(this.props.authedUser) || q.optionTwo.votes.includes(this.props.authedUser)){
-                return <li>{q.optionOne.text}</li>
+                return <Question>{q.optionOne.text}</Question>
               }
             })
           )}
