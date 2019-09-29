@@ -12,7 +12,7 @@ export class Login extends Component {
     super(props);
     this.state = {
       currentUser: null,
-      isDropdown: false
+
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,7 +25,10 @@ export class Login extends Component {
   }
   handleSubmit(e, data) {
     e.preventDefault();
+    console.log('??', data);
+    
     this.setState(currState => {
+      
       this.props.dispatch(authedUser(this.state.currentUser));
       return {
         currentUser: null

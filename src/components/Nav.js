@@ -11,32 +11,33 @@ class Nav extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
   }
-  handleLogin() {
-    
-  }
-  
+  handleLogin() {}
+
   handleLogout() {
     this.props.dispatch(authedUser(null));
   }
   render() {
-    const { user } = this.props;
     return (
       <NavStyles>
         <MenuStyles>
           <li>
-            <NavLink activeClassName="active" exact to="/">Home</NavLink>
+            <NavLink activeClassName="active" exact to="/">
+              Home
+            </NavLink>
           </li>
           <li>
-            <NavLink activeClassName="active" to="/new-question">New Question</NavLink>
+            <NavLink activeClassName="active" to="/create-question">
+              New Question
+            </NavLink>
           </li>
           <li>
             <NavLink to="/board">Loader Board</NavLink>
           </li>
-          <li>Hello {this.props.user}</li>
-          {user ? (
-            <li onClick={this.handleLogout}>Logout</li>
-          ): (
-            <li onClick={this.handleLogin}>Login</li>
+          {this.props.authedUser && (
+            <>
+              <li>Hello {this.props.authedUser}</li>
+              <li onClick={this.handleLogout}>Logout</li>
+            </>
           )}
         </MenuStyles>
       </NavStyles>
@@ -44,10 +45,8 @@ class Nav extends Component {
   }
 }
 function mapStateToProps({ authedUser }) {
-  console.log("Ⓜ", authedUser);
-
   return {
-    user: authedUser
+    authedUser
   };
 }
 export default connect(mapStateToProps)(Nav);

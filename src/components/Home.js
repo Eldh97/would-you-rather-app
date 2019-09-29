@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Container, Menu, Button, Image } from "semantic-ui-react";
 import { connect } from "react-redux";
 import recieveQuestions from "../actions/questions";
-import Question from './Question'
+import Question from "./Question";
+import { Redirect } from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -32,41 +33,70 @@ class Home extends Component {
   componentDidUpdate() {}
 
   render() {
+    const { authedUser, users } = this.props;
+    // const user = this.props.users[authedUser];
+    // let mappedAnswers = [];
+    // console.log('qq', user && user.answers);
+
+    // // for (let [key, value] of Object.entries(user)) {
+    // //   mappedAnswers.push({
+    // //     key,
+    // //     ...value
+    // //   });
+    // // }
+    // // console.log(mappedAnswers);
+
     return (
       <>
-        <Container textAlign="center">
-          <Menu fluid widths={2} style={{ width: "50%" }}>
-            <Menu.Item
-              active={this.state.isAnswersOpen}
-              name="Answered Questuions"
-              onClick={this.handleOpenAnswers}
-            />
-            <Menu.Item
-              active={this.state.isQuestionsOpen}
-              name="Unansewred Questions"
-              onClick={this.handleOpenQuestions}
-            />
-          </Menu>
-        </Container>
-        <Container>
-          {/* {this.props.authedUser && (
-
-          )} */}
-
-          {true && (
-            this.props.questions.map((q, i, array) => {
-              console.log(q);                
-              if(q.optionOne.votes.includes(this.props.authedUser) || q.optionTwo.votes.includes(this.props.authedUser)){
-                return <Question>{q.optionOne.text}</Question>
-              }
-            })
-          )}
-        </Container>
+        {this.props.authedUser ? (
+          <>
+            {" "}
+            <Container textAlign="center">
+              <Menu fluid widths={2} style={{ width: "50%" }}>
+                <Menu.Item
+                  active={this.state.isAnswersOpen}
+                  name="Answered Questuions"
+                  onClick={this.handleOpenAnswers}
+                />
+                <Menu.Item
+                  active={this.state.isQuestionsOpen}
+                  name="Unansewred Questions"
+                  onClick={this.handleOpenQuestions}
+                />
+              </Menu>
+            </Container>
+            <Container>
+              {this.state.isAnswersOpen
+                ? this.props.questions.map((q, i, array) => {
+                    console.log(q);
+                    if (
+                      q.optionOne.votes.includes(this.props.authedUser) ||
+                      q.optionTwo.votes.includes(this.props.authedUser)
+                    ) {
+                      return <Question data={q}></Question>;
+                    }
+                  })
+                : this.props.questions.map((q, i, array) => {
+                    console.log(q);
+                    if (
+                      !(
+                        q.optionOne.votes.includes(this.props.authedUser) ||
+                        q.optionTwo.votes.includes(this.props.authedUser)
+                      )
+                    ) {
+                      return <Question data={q}></Question>;
+                    }
+                  })}
+            </Container>
+          </>
+        ) : (
+          <Redirect to="/login" />
+        )}
       </>
     );
   }
 }
-function mapStateToProps({ questions, authedUser }) {
+function mapStateToProps({ questions, authedUser, users }) {
   // convert questions objects to an array of objects
   let mappedQuestions = [];
 
@@ -76,10 +106,12 @@ function mapStateToProps({ questions, authedUser }) {
       ...value
     });
   }
-  console.log(">>", mappedQuestions);
+
+  console.log(">>", users);
   return {
+    authedUser,
     questions: mappedQuestions,
-    authedUser
+    users
   };
 }
 
