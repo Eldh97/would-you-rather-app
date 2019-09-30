@@ -4,7 +4,7 @@ import { handleInitialData } from "../actions/shared";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Nav from "./Nav";
 import Login from "./Login";
-import Home from "./Home";
+import Dashboard from "./Dashboard";
 import Board from './Board'
 import QuestionPage from "./QuestionPage";
 import CreateQuestion from './CreateQuestion'
@@ -36,11 +36,10 @@ class App extends React.Component {
         <Router>
           <Nav />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Dashboard} />
           <Route exact path="/create-question" component ={CreateQuestion}/>
           <Route path="/board" component={Board} />
           <Route exact path={`/questions/${this.props.question.id}`} component={QuestionPage} />
-          {/* <PrivateRoute path="/" component={Protected} /> */}
           
         </Router>
       </>

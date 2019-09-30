@@ -2,27 +2,18 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { List, Image, Container } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
-
+import User from "./User";
 class Board extends Component {
   render() {
-    const { users } = this.props;
-    // console.log("©", users);
+    const { usersIds } = this.props;
 
     return (
       <Container>
         {this.props.authedUser ? (
-          users.map(user => {
-            return (
-              <List verticalAlign="middle" key={user.id}>
-                <Image src={user.avatarURL} size="small" />
-                <List.Item>{user.name}</List.Item>
-                <List.Item>Answered questions:{user.answers.length}</List.Item>
-                <List.Item>Questions Asked: {user.questions.length}</List.Item>
-                <List.Item>
-                  Score: {user.questions.length + user.answers.length}
-                </List.Item>
-              </List>
-            );
+          usersIds.map(id => {
+            console.log(<User id={id} key={id} />);
+
+            return <User id={id} key={id} />;
           })
         ) : (
           <Redirect to="/login" />
@@ -32,22 +23,9 @@ class Board extends Component {
   }
 }
 function mapStateToProps({ authedUser, users }) {
-  // convert questions objects to an array of objects
-  let mappedUsers = [];
-  for (let [key, value] of Object.entries(users)) {
-    console.log("☝", value);
-
-    mappedUsers.push({
-      ...value,
-      answers: Object.values(value.answers)
-    });
-  }
-
-  console.log("↔", users);
-
   return {
-    users: mappedUsers,
-    authedUser
+    authedUser,
+    usersIds: Object.keys(users)
   };
 }
 export default connect(mapStateToProps)(Board);

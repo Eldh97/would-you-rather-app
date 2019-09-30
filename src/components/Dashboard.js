@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Container, Menu, Button, Image } from "semantic-ui-react";
+import { Container, Menu, Button, Image, Item } from "semantic-ui-react";
 import { connect } from "react-redux";
 import recieveQuestions from "../actions/questions";
 import Question from "./Question";
 import { Redirect } from "react-router-dom";
 
-class Home extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,7 +66,11 @@ class Home extends Component {
               </Menu>
             </Container>
             <Container>
-              {this.state.isAnswersOpen
+              {this.props.questionsIds.map(id => (
+                <Question id={id} />
+              ))}
+
+              {/**  {this.state.isAnswersOpen
                 ? this.props.questions.map((q, i, array) => {
                     console.log(q);
                     if (
@@ -86,7 +90,7 @@ class Home extends Component {
                     ) {
                       return <Question data={q}></Question>;
                     }
-                  })}
+                  })} **/}
             </Container>
           </>
         ) : (
@@ -96,23 +100,13 @@ class Home extends Component {
     );
   }
 }
-function mapStateToProps({ questions, authedUser, users }) {
-  // convert questions objects to an array of objects
-  let mappedQuestions = [];
 
-  for (let [key, value] of Object.entries(questions)) {
-    mappedQuestions.push({
-      key,
-      ...value
-    });
-  }
-
-  console.log(">>", users);
+function mapStateToProps({ questions }) {
   return {
-    authedUser,
-    questions: mappedQuestions,
-    users
+    questionsIds: Object.keys(questions).sort(
+      (a, b) => questions[b].timestamp - questions[a].timestamp
+    )
   };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(Dashboard);
