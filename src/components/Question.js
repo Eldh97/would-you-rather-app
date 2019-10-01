@@ -4,10 +4,9 @@ import { Item, Button } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import selectedQuestion from "../actions/selectedQuestion";
 class Question extends Component {
-  render() {
-    const { question, avatar } = this.props;
-    console.log("♉", this.props);
 
+  render() {
+    const { question, avatar, authedUser } = this.props;
     const { id, author, timestamp, optionOne, optionTwo } = question;
     return (
       <Item>
@@ -16,7 +15,10 @@ class Question extends Component {
           <Item.Header>Would you rather...</Item.Header>
           <Item.Description> {optionOne.text}</Item.Description>
           <Button
-            onClick={() => this.props.dispatch(selectedQuestion(question))}
+            onClick={() => {
+              this.props.dispatch(selectedQuestion(question))
+              
+            }}
           >
             <Link to={`/questions/${id}`}>View Pool</Link>
           </Button>
@@ -26,14 +28,14 @@ class Question extends Component {
   }
 }
 
-function mapStateToProps({ authedUser, questions, users }, { id }) {
-  const question = questions[id];
-  const avatar = users[question.auther];
+function mapStateToProps({ authedUser, users }, { question }) {
+
+  const avatar = users[question.author].avatarURL;
   return {
     authedUser,
-    question,
     users,
-    avatar
+    avatar,
+    question
   };
 }
 

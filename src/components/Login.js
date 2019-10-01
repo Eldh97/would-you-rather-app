@@ -11,8 +11,7 @@ export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: null,
-
+      currentUser: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,24 +19,26 @@ export class Login extends Component {
 
   componentDidUpdate() {}
   handleChange(e, data) {
-    console.log("⏱", data.value);
     this.setState(currState => ({ currentUser: data.value }));
   }
   handleSubmit(e, data) {
     e.preventDefault();
-    console.log('??', data);
-    
+
     this.setState(currState => {
-      
       this.props.dispatch(authedUser(this.state.currentUser));
       return {
         currentUser: null
       };
     });
-    console.log(this.state.currentUser);
   }
   render() {
-    const { users } = this.props;
+    const { usersIds, users } = this.props;
+    const usersList = usersIds.map(id => ({
+      ...users[id],
+      text: users[id].name,
+      value: users[id].id,
+      image: { avatar: true, src: users[id].avatarURL }
+    }));
     return (
       <LoginStyles>
         <div>
@@ -58,7 +59,7 @@ export class Login extends Component {
             placeholder="Select Friend"
             clearable
             selection
-            options={this.props.users}
+            options={usersList}
           />
           <div className="ui container">
             <Button>login</Button>
@@ -70,21 +71,9 @@ export class Login extends Component {
 }
 
 function mapStateToProps({ users }) {
-  // convert users objects to an array of objects
-  let mappedUsers = [];
-
-  for (let [key, value] of Object.entries(users)) {
-    mappedUsers.push({
-      key,
-      ...value,
-      text: value.name,
-      value: value.id,
-      image: { avatar: true, src: value.avatarURL }
-    });
-  }
-
   return {
-    users: mappedUsers
+    usersIds: Object.keys(users),
+    users
   };
 }
 export default connect(mapStateToProps)(Login);

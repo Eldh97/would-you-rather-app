@@ -8,7 +8,6 @@ import Dashboard from "./Dashboard";
 import Board from './Board'
 import QuestionPage from "./QuestionPage";
 import CreateQuestion from './CreateQuestion'
-const Protected = props => <div>Protected</div>;
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -38,7 +37,7 @@ class App extends React.Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/create-question" component ={CreateQuestion}/>
-          <Route path="/board" component={Board} />
+          <Route exact path="/board" component={Board} />
           <Route exact path={`/questions/${this.props.question.id}`} component={QuestionPage} />
           
         </Router>

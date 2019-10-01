@@ -33,24 +33,12 @@ class Dashboard extends Component {
   componentDidUpdate() {}
 
   render() {
-    const { authedUser, users } = this.props;
-    // const user = this.props.users[authedUser];
-    // let mappedAnswers = [];
-    // console.log('qq', user && user.answers);
-
-    // // for (let [key, value] of Object.entries(user)) {
-    // //   mappedAnswers.push({
-    // //     key,
-    // //     ...value
-    // //   });
-    // // }
-    // // console.log(mappedAnswers);
+    const { authedUser, questionsIds, questions } = this.props;
 
     return (
       <>
-        {this.props.authedUser ? (
+        {authedUser ? (
           <>
-            {" "}
             <Container textAlign="center">
               <Menu fluid widths={2} style={{ width: "50%" }}>
                 <Menu.Item
@@ -66,31 +54,27 @@ class Dashboard extends Component {
               </Menu>
             </Container>
             <Container>
-              {this.props.questionsIds.map(id => (
-                <Question id={id} />
-              ))}
-
-              {/**  {this.state.isAnswersOpen
-                ? this.props.questions.map((q, i, array) => {
-                    console.log(q);
+              {this.state.isAnswersOpen
+                ? questionsIds.map((q, i, array) => {
+                    const question = questions[q];
                     if (
-                      q.optionOne.votes.includes(this.props.authedUser) ||
-                      q.optionTwo.votes.includes(this.props.authedUser)
+                      question.optionOne.votes.includes(authedUser) ||
+                      question.optionTwo.votes.includes(authedUser)
                     ) {
-                      return <Question data={q}></Question>;
+                      return <Question question={question} />;
                     }
                   })
-                : this.props.questions.map((q, i, array) => {
-                    console.log(q);
+                : questionsIds.map((q, i, array) => {
+                    const question = questions[q];
                     if (
                       !(
-                        q.optionOne.votes.includes(this.props.authedUser) ||
-                        q.optionTwo.votes.includes(this.props.authedUser)
+                        question.optionOne.votes.includes(authedUser) ||
+                        question.optionTwo.votes.includes(authedUser)
                       )
                     ) {
-                      return <Question data={q}></Question>;
+                      return <Question question={question} />;
                     }
-                  })} **/}
+                  })}
             </Container>
           </>
         ) : (
@@ -101,11 +85,13 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps({ questions }) {
+function mapStateToProps({ questions, authedUser }) {
   return {
     questionsIds: Object.keys(questions).sort(
       (a, b) => questions[b].timestamp - questions[a].timestamp
-    )
+    ),
+    questions,
+    authedUser
   };
 }
 

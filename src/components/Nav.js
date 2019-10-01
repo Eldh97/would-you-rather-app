@@ -16,6 +16,7 @@ class Nav extends Component {
   handleLogout() {
     this.props.dispatch(authedUser(null));
   }
+
   render() {
     return (
       <NavStyles>

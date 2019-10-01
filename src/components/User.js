@@ -9,7 +9,7 @@ class User extends Component {
     const questionsScore = Object.keys(questions).length;
     const answersScore = Object.keys(answers).length;
     const totalScore = questionsScore + answersScore;
-
+    
     return (
       <div>
         <List verticalAlign="middle" key={id} totalScore={totalScore}>
@@ -25,7 +25,6 @@ class User extends Component {
 }
 
 function mapStateToProps({ users }, { id }) {
-  console.log("🏃", id);
 
   const user = users[id];
   return {
