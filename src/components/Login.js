@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { MdArrowDropDown } from "react-icons/md";
-import { Dropdown, Container } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 import LoginStyles from "./styles/LoginStyles";
 import { Button } from "semantic-ui-react";
 import authedUser from "../actions/authedUser";
-import { ninvoke } from "q";
+import { Redirect } from "react-router-dom";
 
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: null
+      currentUser: null,
+      toHome: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,18 +27,27 @@ export class Login extends Component {
     this.setState(currState => {
       this.props.dispatch(authedUser(this.state.currentUser));
       return {
-        currentUser: null
+        currentUser: null,
+        toHome: true
       };
     });
   }
   render() {
     const { usersIds, users } = this.props;
     const usersList = usersIds.map(id => ({
-      ...users[id],
+      id: users[id],
+      name: users[id].name,
+      answers: users[id].questions,
+      questions: users[id].answers,
       text: users[id].name,
       value: users[id].id,
       image: { avatar: true, src: users[id].avatarURL }
     }));
+
+    if (this.state.toHome) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <LoginStyles>
         <div>
@@ -48,7 +57,7 @@ export class Login extends Component {
         <div>
           <img
             src="https://miro.medium.com/max/4800/1*K-4RqDC6zFrpAG31ayDDOg.png"
-            alt="A logo image"
+            alt="A logo"
             style={{ widht: "200px", height: "100px" }}
           />
         </div>
@@ -61,7 +70,7 @@ export class Login extends Component {
             selection
             options={usersList}
           />
-          <div className="ui container">
+          <div>
             <Button>login</Button>
           </div>
         </form>

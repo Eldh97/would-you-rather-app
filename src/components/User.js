@@ -1,31 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { List, Image, Container } from "semantic-ui-react";
+import { Item } from "semantic-ui-react";
 
 class User extends Component {
   render() {
     const { user } = this.props;
-    const {id, name, avatarURL, answers, questions } = user;
+    const { name, avatarURL, answers, questions } = user;
     const questionsScore = Object.keys(questions).length;
     const answersScore = Object.keys(answers).length;
     const totalScore = questionsScore + answersScore;
-    
+
     return (
-      <div>
-        <List verticalAlign="middle" key={id} totalScore={totalScore}>
-          <Image src={avatarURL} size="small" />
-          <List.Item>{name}</List.Item>
-          <List.Item>Answered questions:{answersScore}</List.Item>
-          <List.Item>Questions Asked: {questionsScore}</List.Item>
-          <List.Item>Score: {totalScore}</List.Item>
-        </List>
-      </div>
+      <Item.Group>
+        <Item>
+          <Item.Image size="tiny" src={avatarURL} />
+          <Item.Header>{name}</Item.Header>
+          <Item.Content>
+            <Item.Description>
+              <div>Answered questions:{answersScore}</div>
+              <div>Questions Asked: {questionsScore}</div>
+              <div>Score: {totalScore}</div>
+            </Item.Description>
+          </Item.Content>
+        </Item>
+      </Item.Group>
     );
   }
 }
 
 function mapStateToProps({ users }, { id }) {
-
   const user = users[id];
   return {
     user

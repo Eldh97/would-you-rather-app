@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Radio, Container, Button, Divider } from "semantic-ui-react";
-import { _saveQuestionAnswer } from "../utils/_DATA";
-import { handleInitialData } from "../actions/shared";
+import { Container } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 import QuestionResults from "./QuestionResults";
+import { handleAddAnswer, recieveQuestions } from "../actions/questions";
 
 class QuestionPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: "",
       option: "",
       isSubmit: false
     };
@@ -18,77 +18,91 @@ class QuestionPage extends Component {
   }
   handleVote(e) {
     e.preventDefault();
-    _saveQuestionAnswer({
-      authedUser: this.props.authedUser,
-      qid: this.props.selectedQuestion.id,
-      answer: this.state.option
-    }).then(() => {
-      this.props.dispatch(handleInitialData());
-      this.setState({ isSubmit: true });
-    });
+    this.props.dispatch(
+      handleAddAnswer({
+        authedUser: this.props.authedUser,
+        qid: this.props.selectedQuestion.id,
+        answer: this.state.option
+      })
+    );
+    this.props.dispatch(recieveQuestions());
+    this.setState({ isSubmit: true });
   }
-  handleChange(e, { value }) {
+  handleChange(e) {
+    const value = e.target.value;
     this.setState(currState => {
-      if (value === this.props.selectedQuestion.optionOne.text) {
+      if (this.state.option === "optionOne") {
         return {
-          option: "optionOne"
+          option: "optionOne",
+          value: value
         };
       }
       return {
-        option: "optionTwo"
+        option: "optionTwo",
+        value: value
       };
     });
   }
   render() {
-    console.log(
-      "@",
-      this.props.selectedQuestion.id in
-        this.props.users[this.props.authedUser].answers
-    );
-
     if (this.state.isSubmit) {
       return <QuestionResults id={this.props.selectedQuestion.id} />;
     }
     if (
+      this.props.authedUser &&
       this.props.selectedQuestion.id in
-      this.props.users[this.props.authedUser].answers
+        this.props.users[this.props.authedUser].answers
     ) {
       return <QuestionResults id={this.props.selectedQuestion.id} />;
     }
+
     return (
-      <div>
+      <div style={{ marginTop: "20px" }}>
         {this.props.authedUser ? (
           <Container>
-            <Form onSubmit={this.handleVote}>
-              <Form.Field>
-                Would you rather: <b>{this.state.value}</b>
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label={this.props.selectedQuestion.optionOne.text}
-                  name="radioGroup"
+            <form onSubmit={this.handleVote}>
+              <h2>Would you rather:</h2>
+
+              <div>
+                <label
+                  htmlFor={this.props.selectedQuestion.optionOne.text}
+                  style={{ marginRight: "9px" }}
+                >
+                  {this.props.selectedQuestion.optionOne.text}
+                </label>
+                <input
+                  type="radio"
+                  name={this.props.selectedQuestion.optionOne.text}
+                  onChange={this.handleChange}
                   value={this.props.selectedQuestion.optionOne.text}
                   checked={
-                    this.state.value ===
-                    this.props.selectedQuestion.optionOne.text
+                    this.props.selectedQuestion.optionOne.text ===
+                    this.state.value
                   }
-                  onChange={this.handleChange}
                 />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label={this.props.selectedQuestion.optionTwo.text}
-                  name="radioGroup"
+              </div>
+
+              <div>
+                <label
+                  htmlFor={this.props.selectedQuestion.optionTwo.text}
+                  style={{ marginRight: "9px" }}
+                >
+                  {this.props.selectedQuestion.optionTwo.text}
+                </label>
+                <input
+                  type="radio"
+                  name={this.props.selectedQuestion.optionTwo.text}
+                  onChange={this.handleChange}
                   value={this.props.selectedQuestion.optionTwo.text}
                   checked={
-                    this.state.value ===
-                    this.props.selectedQuestion.optionTwo.text
+                    this.props.selectedQuestion.optionTwo.text ===
+                    this.state.value
                   }
-                  onChange={this.handleChange}
                 />
-              </Form.Field>
-              <Button>Vote</Button>
-            </Form>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <button>Submit</button>
+              </div>
+            </form>
           </Container>
         ) : (
           <Redirect to="/login" />

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Form, Button, Container } from "semantic-ui-react";
+import { Form, Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { _saveQuestion } from "../utils/_DATA";
-import { handleInitialData } from "../actions/shared";
 import { Redirect } from "react-router-dom";
+import { handleAddQuestion } from "../actions/questions";
 
 class CreateQuestion extends Component {
   constructor(props) {
@@ -21,47 +20,60 @@ class CreateQuestion extends Component {
   handleChange(e, { name, value }) {
     this.setState({ [name]: value });
   }
+
   handleSubmit(e) {
     e.preventDefault();
     const { optionOne, optionTwo } = this.state;
-    _saveQuestion({
-      author: this.props.authedUser,
-      optionOneText: optionOne,
-      optionTwoText: optionTwo
-    }).then(question => {
-      this.props.dispatch(handleInitialData());
-      this.setState(currState => ({
-        isSubmit: true
-      }));
-    });
+
+    this.props.dispatch(
+      handleAddQuestion({
+        author: this.props.authedUser,
+        optionOneText: optionOne,
+        optionTwoText: optionTwo
+      })
+    );
+    this.setState(currState => ({
+      isSubmit: true
+    }));
   }
   render() {
     if (this.state.isSubmit && this.props.authedUser) {
       return <Redirect to="/" />;
     }
     return (
-      <div>
-        {this.props.authedUser ? (
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Group>
-              <Form.Input
-                placeholder="Option two"
-                name="optionOne"
-                value={this.state.optionOne}
-                onChange={this.handleChange}
-              />
-              <Form.Input
-                placeholder="Option two"
-                name="optionTwo"
-                value={this.state.optionTwo}
-                onChange={this.handleChange}
-              />
-              <Form.Button content="Submit" onSubmit={this.handleSubmit} />
-            </Form.Group>
-          </Form>
-        ) : (
-          <Redirect to="/login" />
-        )}
+      <div style={{ margin: "35px" }}>
+        <Grid centered columns={2}>
+          <Grid.Column textAlign="center">
+            <h1>Create New Question</h1>
+            <span>Complete the question:</span>
+            {this.props.authedUser ? (
+              <Form>
+                <Form.Group>
+                  <Form.Input
+                    required
+                    placeholder="Enter Option One Text "
+                    name="optionOne"
+                    value={this.state.optionOne}
+                    onChange={this.handleChange}
+                  />
+                  <div>Or</div>
+                  <Form.Input
+                    required
+                    placeholder="Enter Option Two Text "
+                    name="optionTwo"
+                    value={this.state.optionTwo}
+                    onChange={this.handleChange}
+                  />
+                  <button type="submit" onClick={this.handleSubmit}>
+                    Submit
+                  </button>
+                </Form.Group>
+              </Form>
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }

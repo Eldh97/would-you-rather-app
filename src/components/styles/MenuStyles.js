@@ -7,8 +7,18 @@ const MenuStyles = styled.ul`
   justify-content: space-around;
   align-items: center;
   list-style: none;
+  li {
+    font-size: 22px;
+    color: black;
+    font-weight: 500;
+    color: #fff;
+  }
+  a {
+    color: #fff;
+    font-weight: 500;
+  }
   .active {
-    border-bottom:.2rem solid #fff; 
+    border-bottom: 0.2rem solid #fff;
   }
 `;
 export default MenuStyles;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { List, Image, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 import User from "./User";
 
@@ -10,9 +10,9 @@ class Board extends Component {
     this.sortUsers = this.sortUsers.bind(this);
   }
   sortUsers() {
-      const usersScore = this.props.usersIds.map(id => {
+    const usersScore = this.props.usersIds.map(id => {
       const user = this.props.users[id];
-      const { name, avatarURL, answers, questions } = user;
+      const { answers, questions } = user;
       const questionsScore = Object.keys(questions).length;
       const answersScore = Object.keys(answers).length;
       const totalScore = questionsScore + answersScore;
@@ -29,18 +29,18 @@ class Board extends Component {
     return sortedUsers;
   }
   render() {
-    const { usersIds } = this.props;
-
     return (
-      <Container>
-        {this.props.authedUser ? (
-          this.sortUsers().map(({id, totalScore}) => {
-            return <User id={id} key={id} />;
-          })
-        ) : (
-          <Redirect to="/login" />
-        )}
-      </Container>
+      <div style={{ marginTop: "20px" }}>
+        <Container>
+          {this.props.authedUser ? (
+            this.sortUsers().map(({ id, totalScore }) => {
+              return <User id={id} key={id} />;
+            })
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Container>
+      </div>
     );
   }
 }

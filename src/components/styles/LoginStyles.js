@@ -6,8 +6,8 @@ export const LoginStyles = styled.div`
   h1 {
     font-weight: 500;
   }
-  button{
-      display:block ;
+  button {
+    display: block;
   }
 `;
 export default LoginStyles;

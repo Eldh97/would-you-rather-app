@@ -1,7 +1,15 @@
-import { _getQuestions } from "../utils/_DATA";
-export const RECIEVE_QUESTIONS = "RECIEVE_QUESTIONS";
+import {
+  _getQuestions,
+  _saveQuestion,
+  _saveQuestionAnswer
+} from "../utils/_DATA";
+import { receiveUsers } from "./users";
 
-export default function recieveQuestions() {
+export const RECIEVE_QUESTIONS = "RECIEVE_QUESTIONS";
+export const ADD_QUESTION = "ADD_QUESTION";
+export const ADD_ANSWER = "ANSWER_QUESTION";
+
+export function recieveQuestions() {
   return dispatch => {
     return _getQuestions().then(questions => {
       dispatch({
@@ -9,5 +17,22 @@ export default function recieveQuestions() {
         questions: questions
       });
     });
+  };
+}
+
+export function handleAddQuestion(question) {
+  return dispatch => {
+    return _saveQuestion(question).then(q => {
+      dispatch({
+        type: ADD_QUESTION,
+        question: q
+      });
+    });
+  };
+}
+
+export function handleAddAnswer(answer) {
+  return dispatch => {
+    return _saveQuestionAnswer(answer).then(() => dispatch(receiveUsers()));
   };
 }

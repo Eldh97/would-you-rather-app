@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Container, Menu, Button, Image, Item } from "semantic-ui-react";
+import { Container, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
-import recieveQuestions from "../actions/questions";
+import { recieveQuestions } from "../actions/questions";
 import Question from "./Question";
 import { Redirect } from "react-router-dom";
 
@@ -43,28 +43,29 @@ class Dashboard extends Component {
               <Menu fluid widths={2} style={{ width: "50%" }}>
                 <Menu.Item
                   active={this.state.isAnswersOpen}
-                  name="Answered Questuions"
+                  name="Answered Questions "
                   onClick={this.handleOpenAnswers}
                 />
                 <Menu.Item
                   active={this.state.isQuestionsOpen}
-                  name="Unansewred Questions"
+                  name="Unanswered Questions"
                   onClick={this.handleOpenQuestions}
                 />
               </Menu>
             </Container>
             <Container>
               {this.state.isAnswersOpen
-                ? questionsIds.map((q, i, array) => {
+                ? questionsIds.map(q => {
                     const question = questions[q];
                     if (
                       question.optionOne.votes.includes(authedUser) ||
                       question.optionTwo.votes.includes(authedUser)
                     ) {
-                      return <Question question={question} />;
+                      return <Question key={question.id} question={question} />;
                     }
+                    return '';
                   })
-                : questionsIds.map((q, i, array) => {
+                : questionsIds.map(q => {
                     const question = questions[q];
                     if (
                       !(
@@ -72,8 +73,9 @@ class Dashboard extends Component {
                         question.optionTwo.votes.includes(authedUser)
                       )
                     ) {
-                      return <Question question={question} />;
+                      return <Question key={question.id} question={question} />;
                     }
+                    return '';
                   })}
             </Container>
           </>

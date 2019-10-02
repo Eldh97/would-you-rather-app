@@ -8,10 +8,12 @@ import authedUser from "../actions/authedUser";
 class Nav extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeItem: "home"
+    };
     this.handleLogout = this.handleLogout.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
   }
-  handleLogin() {}
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   handleLogout() {
     this.props.dispatch(authedUser(null));
@@ -37,7 +39,9 @@ class Nav extends Component {
           {this.props.authedUser && (
             <>
               <li>Hello {this.props.authedUser}</li>
-              <li onClick={this.handleLogout}>Logout</li>
+              <li style={{ cursor: "pointer" }} onClick={this.handleLogout}>
+                Logout
+              </li>
             </>
           )}
         </MenuStyles>

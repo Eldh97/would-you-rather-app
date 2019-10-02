@@ -5,9 +5,11 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Nav from "./Nav";
 import Login from "./Login";
 import Dashboard from "./Dashboard";
-import Board from './Board'
+import Board from "./Board";
 import QuestionPage from "./QuestionPage";
-import CreateQuestion from './CreateQuestion'
+import CreateQuestion from "./CreateQuestion";
+import { Grid } from "semantic-ui-react";
+import Layout from "./styles/Layout";
 
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -28,27 +30,30 @@ class App extends React.Component {
   }
 
   render() {
-
-
     return (
-      <>
-        <Router>
-          <Nav />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/create-question" component ={CreateQuestion}/>
-          <Route exact path="/board" component={Board} />
-          <Route exact path={`/questions/${this.props.question.id}`} component={QuestionPage} />
-          
-        </Router>
-      </>
+      <Layout>
+        <Grid>
+          <Grid.Column textAlign="center" padded="100px">
+            <Router>
+              <Nav />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/create-question" component={CreateQuestion} />
+              <Route exact path="/board" component={Board} />
+              <Route
+                exact
+                path={`/questions/${this.props.question.id}`}
+                component={QuestionPage}
+              />
+            </Router>
+          </Grid.Column>
+        </Grid>
+      </Layout>
     );
   }
 }
 
 function mapStateToProps({ users, authedUser, selectedQuestion }) {
-  console.log('⏰', selectedQuestion);
-  
   return {
     users: users,
     authedUser,

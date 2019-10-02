@@ -1,35 +1,39 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Item, Button } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import selectedQuestion from "../actions/selectedQuestion";
+import QuestionStyles from "./styles/QuestionStyles";
 class Question extends Component {
-
   render() {
-    const { question, avatar, authedUser } = this.props;
-    const { id, author, timestamp, optionOne, optionTwo } = question;
+    const { question, avatar } = this.props;
+    const { id, author, optionOne } = question;
     return (
-      <Item>
-        <Item.Image size="tiny" src={avatar} />
-        <Item.Content>
-          <Item.Header>Would you rather...</Item.Header>
-          <Item.Description> {optionOne.text}</Item.Description>
-          <Button
-            onClick={() => {
-              this.props.dispatch(selectedQuestion(question))
-              
-            }}
-          >
-            <Link to={`/questions/${id}`}>View Pool</Link>
-          </Button>
-        </Item.Content>
-      </Item>
+      <QuestionStyles>
+        <h4>{author} Asks:</h4>
+        <div className="content">
+          <div className="image__container">
+            <img src={avatar} alt="user"/>
+          </div>
+          <div className="description">
+            <h3>Would you rather...</h3>
+            <p>...{optionOne.text}...</p>
+            <Link
+              to={`/questions/${id}`}
+              onClick={() => {
+                this.props.dispatch(selectedQuestion(question));
+              }}
+              className="link"
+            >
+              View Pool
+            </Link>
+          </div>
+        </div>
+      </QuestionStyles>
     );
   }
 }
 
 function mapStateToProps({ authedUser, users }, { question }) {
-
   const avatar = users[question.author].avatarURL;
   return {
     authedUser,
