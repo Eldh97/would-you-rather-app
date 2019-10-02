@@ -44,6 +44,11 @@ class QuestionPage extends Component {
     });
   }
   render() {
+    const userAvatar = this.props.users[this.props.selectedQuestion.author]
+      .avatarURL;
+    console.log(this.props.users[this.props.selectedQuestion.author].avatarUL);
+    console.log(">>", userAvatar);
+
     if (this.state.isSubmit) {
       return <QuestionResults id={this.props.selectedQuestion.id} />;
     }
@@ -58,7 +63,12 @@ class QuestionPage extends Component {
     return (
       <div style={{ marginTop: "20px" }}>
         {this.props.authedUser ? (
-          <Container>
+          <div>
+            <img
+              src={userAvatar}
+              alt="user"
+              style={{ width: "80px", height: "80px" }}
+            />
             <form onSubmit={this.handleVote}>
               <h2>Would you rather:</h2>
 
@@ -103,7 +113,7 @@ class QuestionPage extends Component {
                 <button>Submit</button>
               </div>
             </form>
-          </Container>
+          </div>
         ) : (
           <Redirect to="/login" />
         )}
