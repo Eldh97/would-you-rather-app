@@ -46,8 +46,6 @@ class QuestionPage extends Component {
   render() {
     const userAvatar = this.props.users[this.props.selectedQuestion.author]
       .avatarURL;
-    console.log(this.props.users[this.props.selectedQuestion.author].avatarUL);
-    console.log(">>", userAvatar);
 
     if (this.state.isSubmit) {
       return <QuestionResults id={this.props.selectedQuestion.id} />;
