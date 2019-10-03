@@ -29,12 +29,12 @@ class Nav extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName="active" to="/create-question">
+            <NavLink activeClassName="active" to="/add">
               New Question
             </NavLink>
           </li>
           <li>
-            <NavLink to="/board">Loader Board</NavLink>
+            <NavLink to="/leaderboard">Loader Board</NavLink>
           </li>
           {this.props.authedUser && (
             <>

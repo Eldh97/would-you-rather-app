@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Container } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 import QuestionResults from "./QuestionResults";
 import { handleAddAnswer, recieveQuestions } from "../actions/questions";
@@ -16,6 +15,7 @@ class QuestionPage extends Component {
     this.handleVote = this.handleVote.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
   handleVote(e) {
     e.preventDefault();
     this.props.dispatch(
@@ -28,6 +28,7 @@ class QuestionPage extends Component {
     this.props.dispatch(recieveQuestions());
     this.setState({ isSubmit: true });
   }
+
   handleChange(e) {
     const value = e.target.value;
     this.setState(currState => {
@@ -43,10 +44,11 @@ class QuestionPage extends Component {
       };
     });
   }
-  render() {
-    const userAvatar = this.props.users[this.props.selectedQuestion.author]
-      .avatarURL;
 
+  render() {
+    if (!this.props.authedUser) {
+      return <Redirect to="/login" />;
+    }
     if (this.state.isSubmit) {
       return <QuestionResults id={this.props.selectedQuestion.id} />;
     }
@@ -58,63 +60,61 @@ class QuestionPage extends Component {
       return <QuestionResults id={this.props.selectedQuestion.id} />;
     }
 
+    const userAvatar = this.props.users[this.props.selectedQuestion.author]
+      .avatarURL;
     return (
       <div style={{ marginTop: "20px" }}>
-        {this.props.authedUser ? (
-          <div>
-            <img
-              src={userAvatar}
-              alt="user"
-              style={{ width: "80px", height: "80px" }}
-            />
-            <form onSubmit={this.handleVote}>
-              <h2>Would you rather:</h2>
+        <div>
+          <img
+            src={userAvatar}
+            alt="user"
+            style={{ width: "80px", height: "80px" }}
+          />
+          <form onSubmit={this.handleVote}>
+            <h2>Would you rather:</h2>
 
-              <div>
-                <label
-                  htmlFor={this.props.selectedQuestion.optionOne.text}
-                  style={{ marginRight: "9px" }}
-                >
-                  {this.props.selectedQuestion.optionOne.text}
-                </label>
-                <input
-                  type="radio"
-                  name={this.props.selectedQuestion.optionOne.text}
-                  onChange={this.handleChange}
-                  value={this.props.selectedQuestion.optionOne.text}
-                  checked={
-                    this.props.selectedQuestion.optionOne.text ===
-                    this.state.value
-                  }
-                />
-              </div>
+            <div>
+              <label
+                htmlFor={this.props.selectedQuestion.optionOne.text}
+                style={{ marginRight: "9px" }}
+              >
+                {this.props.selectedQuestion.optionOne.text}
+              </label>
+              <input
+                type="radio"
+                name={this.props.selectedQuestion.optionOne.text}
+                onChange={this.handleChange}
+                value={this.props.selectedQuestion.optionOne.text}
+                checked={
+                  this.props.selectedQuestion.optionOne.text ===
+                  this.state.value
+                }
+              />
+            </div>
 
-              <div>
-                <label
-                  htmlFor={this.props.selectedQuestion.optionTwo.text}
-                  style={{ marginRight: "9px" }}
-                >
-                  {this.props.selectedQuestion.optionTwo.text}
-                </label>
-                <input
-                  type="radio"
-                  name={this.props.selectedQuestion.optionTwo.text}
-                  onChange={this.handleChange}
-                  value={this.props.selectedQuestion.optionTwo.text}
-                  checked={
-                    this.props.selectedQuestion.optionTwo.text ===
-                    this.state.value
-                  }
-                />
-              </div>
-              <div style={{ textAlign: "center" }}>
-                <button>Submit</button>
-              </div>
-            </form>
-          </div>
-        ) : (
-          <Redirect to="/login" />
-        )}
+            <div>
+              <label
+                htmlFor={this.props.selectedQuestion.optionTwo.text}
+                style={{ marginRight: "9px" }}
+              >
+                {this.props.selectedQuestion.optionTwo.text}
+              </label>
+              <input
+                type="radio"
+                name={this.props.selectedQuestion.optionTwo.text}
+                onChange={this.handleChange}
+                value={this.props.selectedQuestion.optionTwo.text}
+                checked={
+                  this.props.selectedQuestion.optionTwo.text ===
+                  this.state.value
+                }
+              />
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <button>Submit</button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

@@ -12,26 +12,42 @@ class QuestionResults extends Component {
     const userAnswer =
       this.props.authedUser &&
       this.props.users[this.props.authedUser].answers[question.id];
+
     return (
       <div style={{ marginTop: "20px" }}>
         <h2>Askeed by: {question.author}</h2>
         <ul>
           {userAnswer === "optionOne" ? (
             <li style={{ fontSize: "22px" }}>
-              {optionOne.text} : {optionOneScore} of {totalScore} (Your Vote)
+              <span>
+                {optionOne.text} : {optionOneScore} of {totalScore} (Your Vote)
+                (
+                {totalScore > 0 &&
+                  Math.floor((optionOneScore / totalScore) * 100)}
+                %)
+              </span>
             </li>
           ) : (
             <li style={{ fontSize: "22px" }}>
-              {optionOne.text} : {optionOneScore} of {totalScore}
+              {optionOne.text} : {optionOneScore} of {totalScore} (
+              {totalScore > 0 &&
+                Math.floor((optionOneScore / totalScore) * 100)}
+              %)
             </li>
           )}
           {userAnswer === "optionTwo" ? (
             <li style={{ fontSize: "22px" }}>
-              {optionTwo.text} : {optionTwoScore} of {totalScore} (Your vote)
+              {optionTwo.text} : {optionTwoScore} of {totalScore} (Your vote) (
+              {totalScore > 0 &&
+                Math.floor((optionTwoScore / totalScore) * 100)}
+              %)
             </li>
           ) : (
             <li style={{ fontSize: "22px" }}>
-              {optionTwo.text} : {optionTwoScore} of {totalScore}
+              {optionTwo.text} : {optionTwoScore} of {totalScore} (
+              {totalScore > 0 &&
+                Math.floor((optionTwoScore / totalScore) * 100)}
+              %)
             </li>
           )}
         </ul>

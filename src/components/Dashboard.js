@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { recieveQuestions } from "../actions/questions";
 import Question from "./Question";
 import { Redirect } from "react-router-dom";
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -63,7 +62,7 @@ class Dashboard extends Component {
                     ) {
                       return <Question key={question.id} question={question} />;
                     }
-                    return '';
+                    return "";
                   })
                 : questionsIds.map(q => {
                     const question = questions[q];
@@ -75,7 +74,7 @@ class Dashboard extends Component {
                     ) {
                       return <Question key={question.id} question={question} />;
                     }
-                    return '';
+                    return "";
                   })}
             </Container>
           </>

@@ -17,7 +17,6 @@ export class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidUpdate() {}
   handleChange(e, data) {
     this.setState(currState => ({ currentUser: data.value }));
   }

@@ -27,6 +27,7 @@ export function handleAddQuestion(question) {
         type: ADD_QUESTION,
         question: q
       });
+      dispatch(receiveUsers())
     });
   };
 }

@@ -4,11 +4,12 @@ import { Container } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 import User from "./User";
 
-class Board extends Component {
+class Leaderboard extends Component {
   constructor(props) {
     super(props);
     this.sortUsers = this.sortUsers.bind(this);
   }
+
   sortUsers() {
     const usersScore = this.props.usersIds.map(id => {
       const user = this.props.users[id];
@@ -51,4 +52,4 @@ function mapStateToProps({ authedUser, users }) {
     usersIds: Object.keys(users)
   };
 }
-export default connect(mapStateToProps)(Board);
+export default connect(mapStateToProps)(Leaderboard);
