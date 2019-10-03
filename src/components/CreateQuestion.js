@@ -17,7 +17,8 @@ class CreateQuestion extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e, { name, value }) {
+  handleChange(e) {
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   }
 
