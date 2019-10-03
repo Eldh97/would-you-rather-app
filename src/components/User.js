@@ -18,7 +18,7 @@ class User extends Component {
           <Item.Content>
             <Item.Description>
               <div>Answered questions:{answersScore}</div>
-              <div>Questions Asked: {questionsScore}</div>
+              <div>Created questions: {questionsScore}</div>
               <div>Score: {totalScore}</div>
             </Item.Description>
           </Item.Content>

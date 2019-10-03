@@ -15,12 +15,13 @@ class QuestionResults extends Component {
 
     return (
       <div style={{ marginTop: "20px" }}>
-        <h2>Askeed by: {question.author}</h2>
+        <h1>Asked by: {question.author}</h1>
+        <h2>Results:</h2>
         <ul>
           {userAnswer === "optionOne" ? (
             <li style={{ fontSize: "22px" }}>
               <span>
-                {optionOne.text} : {optionOneScore} of {totalScore} (Your Vote)
+                Would you rather {optionOne.text} ? : {optionOneScore} of {totalScore} votes (Your Vote)
                 (
                 {totalScore > 0 &&
                   Math.floor((optionOneScore / totalScore) * 100)}
@@ -29,7 +30,7 @@ class QuestionResults extends Component {
             </li>
           ) : (
             <li style={{ fontSize: "22px" }}>
-              {optionOne.text} : {optionOneScore} of {totalScore} (
+              Would you rather {optionOne.text} ? : {optionOneScore} of {totalScore} votes (
               {totalScore > 0 &&
                 Math.floor((optionOneScore / totalScore) * 100)}
               %)
@@ -37,14 +38,14 @@ class QuestionResults extends Component {
           )}
           {userAnswer === "optionTwo" ? (
             <li style={{ fontSize: "22px" }}>
-              {optionTwo.text} : {optionTwoScore} of {totalScore} (Your vote) (
+             Would you rather {optionTwo.text} ? : {optionTwoScore} of {totalScore} votes (Your vote) (
               {totalScore > 0 &&
                 Math.floor((optionTwoScore / totalScore) * 100)}
               %)
             </li>
           ) : (
             <li style={{ fontSize: "22px" }}>
-              {optionTwo.text} : {optionTwoScore} of {totalScore} (
+              Would you rather {optionTwo.text} ? : {optionTwoScore} of {totalScore} votes (
               {totalScore > 0 &&
                 Math.floor((optionTwoScore / totalScore) * 100)}
               %)

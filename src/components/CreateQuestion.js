@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Grid } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { handleAddQuestion } from "../actions/questions";
@@ -52,8 +52,9 @@ class CreateQuestion extends Component {
         >
           <h1>Create New Question</h1>
           <span>Complete the question:</span>
+          <h2>Would you rather</h2>
           {this.props.authedUser ? (
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "center", fontSize:'16px' }}>
               <form>
                 <Form.Group>
                   <input
@@ -64,7 +65,7 @@ class CreateQuestion extends Component {
                     value={this.state.optionOne}
                     onChange={this.handleChange}
                   />
-                  <div>Or</div>
+                  <div>OR</div>
                   <input
                     type="text"
                     required

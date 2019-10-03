@@ -60,6 +60,7 @@ export class Login extends Component {
             style={{ widht: "200px", height: "100px" }}
           />
         </div>
+        <h2>Sign in</h2>
         <form onSubmit={this.handleSubmit}>
           <Dropdown
             value={this.state.currentUser ? this.state.currentUser : ""}
@@ -70,7 +71,7 @@ export class Login extends Component {
             options={usersList}
           />
           <div>
-            <Button>login</Button>
+            <Button>Sign in</Button>
           </div>
         </form>
       </LoginStyles>
