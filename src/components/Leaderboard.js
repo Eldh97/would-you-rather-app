@@ -34,7 +34,7 @@ class Leaderboard extends Component {
       <div style={{ marginTop: "20px" }}>
         <Container>
           {this.props.authedUser ? (
-            this.sortUsers().map(({ id, totalScore }) => {
+            this.sortUsers().map(({ id }) => {
               return <User id={id} key={id} />;
             })
           ) : (

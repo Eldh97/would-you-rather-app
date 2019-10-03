@@ -24,7 +24,7 @@ class QuestionResults extends Component {
                 Would you rather {optionOne.text} ? : {optionOneScore} of {totalScore} votes (Your Vote)
                 (
                 {totalScore > 0 &&
-                  Math.floor((optionOneScore / totalScore) * 100)}
+                  Math.round((optionOneScore / totalScore) * 100)}
                 %)
               </span>
             </li>
@@ -32,7 +32,7 @@ class QuestionResults extends Component {
             <li style={{ fontSize: "22px" }}>
               Would you rather {optionOne.text} ? : {optionOneScore} of {totalScore} votes (
               {totalScore > 0 &&
-                Math.floor((optionOneScore / totalScore) * 100)}
+                Math.round((optionOneScore / totalScore) * 100)}
               %)
             </li>
           )}
@@ -40,14 +40,14 @@ class QuestionResults extends Component {
             <li style={{ fontSize: "22px" }}>
              Would you rather {optionTwo.text} ? : {optionTwoScore} of {totalScore} votes (Your vote) (
               {totalScore > 0 &&
-                Math.floor((optionTwoScore / totalScore) * 100)}
+                Math.round((optionTwoScore / totalScore) * 100)}
               %)
             </li>
           ) : (
             <li style={{ fontSize: "22px" }}>
               Would you rather {optionTwo.text} ? : {optionTwoScore} of {totalScore} votes (
               {totalScore > 0 &&
-                Math.floor((optionTwoScore / totalScore) * 100)}
+                Math.round((optionTwoScore / totalScore) * 100)}
               %)
             </li>
           )}
