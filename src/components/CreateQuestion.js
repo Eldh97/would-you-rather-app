@@ -41,15 +41,22 @@ class CreateQuestion extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div style={{ margin: "35px" }}>
-        <Grid centered columns={2}>
-          <Grid.Column textAlign="center">
-            <h1>Create New Question</h1>
-            <span>Complete the question:</span>
-            {this.props.authedUser ? (
-              <Form>
+      <div>
+        <div
+          style={{
+            marginTop: "35px",
+            marginLeft: "50%",
+            transform: "translateX(-50%)"
+          }}
+        >
+          <h1>Create New Question</h1>
+          <span>Complete the question:</span>
+          {this.props.authedUser ? (
+            <div style={{ textAlign: "center" }}>
+              <form>
                 <Form.Group>
-                  <Form.Input
+                  <input
+                    type="text"
                     required
                     placeholder="Enter Option One Text "
                     name="optionOne"
@@ -57,7 +64,8 @@ class CreateQuestion extends Component {
                     onChange={this.handleChange}
                   />
                   <div>Or</div>
-                  <Form.Input
+                  <input
+                    type="text"
                     required
                     placeholder="Enter Option Two Text "
                     name="optionTwo"
@@ -68,12 +76,12 @@ class CreateQuestion extends Component {
                     Submit
                   </button>
                 </Form.Group>
-              </Form>
-            ) : (
-              <Redirect to="/login" />
-            )}
-          </Grid.Column>
-        </Grid>
+              </form>
+            </div>
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </div>
       </div>
     );
   }
