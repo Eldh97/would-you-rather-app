@@ -5,6 +5,8 @@ import LoginStyles from "./styles/LoginStyles";
 import { Button } from "semantic-ui-react";
 import authedUser from "../actions/authedUser";
 import { Redirect } from "react-router-dom";
+import Illustration from "./Ilustration";
+// import loginBackground from "../../assets/images/login.svg";
 
 export class Login extends Component {
   constructor(props) {
@@ -48,33 +50,47 @@ export class Login extends Component {
     }
 
     return (
-      <LoginStyles>
-        <div>
-          <h1>Welocme to the Would Rather App!</h1>
-          <span>Please sign in to continue</span>
-        </div>
-        <div>
-          <img
-            src="https://miro.medium.com/max/4800/1*K-4RqDC6zFrpAG31ayDDOg.png"
-            alt="A logo"
-            style={{ widht: "200px", height: "100px" }}
-          />
-        </div>
-        <h2>Sign in</h2>
-        <form onSubmit={this.handleSubmit}>
-          <Dropdown
-            value={this.state.currentUser ? this.state.currentUser : ""}
-            onChange={this.handleChange}
-            placeholder="Select Friend"
-            clearable
-            selection
-            options={usersList}
-          />
-          <div>
-            <Button>Sign in</Button>
+
+      <div>
+        <div
+          className="flex flex-col xl:flex-row 
+            xl:pl-44  p-10 pt-16 xl:pr-36  justify-start xl:justify-between min-h-screen  
+             items-center xl:items-start  from-green-600 to-green-500 bg-gradient-to-l
+                
+            "
+        >
+          <div className="flex flex-col lg:block  justify-center items-center w-full lg:w-auto">
+            <h2 className="text-base mb-2">Welcome Back 👋</h2>
+            <h1 className="text-6xl font-semibold mb-10 ">Login</h1>
+            {/* <Form /> */}
+            <LoginStyles>
+
+              <div>
+
+              </div>
+              <form onSubmit={this.handleSubmit} className="text-2xl">
+                <Dropdown
+                  value={this.state.currentUser ? this.state.currentUser : ""}
+                  onChange={this.handleChange}
+                  placeholder="Select Friend"
+                  clearable
+                  selection
+                  options={usersList}
+                />
+                <div >
+                  <button className="bg-white mt-4 pr-4 pl-4 p-2 
+                  text-gray-900 rounded-md w-full cursor-pointer font-semibold">Sign in</button>
+                </div>
+              </form>
+            </LoginStyles>
           </div>
-        </form>
-      </LoginStyles>
+          <div className=" mt-20 xl:mt-0 text-center flex justify-center ">
+            {/* <Illustration src={loginBackground} /> */}
+          </div>
+        </div>
+
+        {/* <Footer /> */}
+      </div>
     );
   }
 }

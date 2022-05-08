@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 import { recieveQuestions } from "../actions/questions";
 import Question from "./Question";
 import { Redirect } from "react-router-dom";
+import Sidebar from "./sidebar/Sidebar";
+import Main from "./Main";
+import FooterDashboard from "./FooterDashboard";
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -29,32 +33,41 @@ class Dashboard extends Component {
       isQuestionsOpen: false
     }));
   }
-  componentDidUpdate() {}
+  componentDidUpdate() { }
 
   render() {
     const { authedUser, questionsIds, questions } = this.props;
 
     return (
-      <>
-        {authedUser ? (
-          <>
-            <Container textAlign="center">
-              <Menu fluid widths={2} style={{ width: "50%" }}>
-                <Menu.Item
-                  active={this.state.isAnswersOpen}
-                  name="Answered Questions "
-                  onClick={this.handleOpenAnswers}
-                />
-                <Menu.Item
-                  active={this.state.isQuestionsOpen}
-                  name="Unanswered Questions"
-                  onClick={this.handleOpenQuestions}
-                />
-              </Menu>
-            </Container>
-            <Container>
-              {this.state.isAnswersOpen
-                ? questionsIds.map(q => {
+      <div>
+
+        <Sidebar />
+        <Main>
+          {authedUser ? (
+            <>
+              <hgroup className="flex text-left mb-10  items-center  justify-center  text-gray-900 font-bold">
+                <div className="w-1/2">
+                  <h2 className="text-base mb-2">Welcome Back 👋</h2>
+                  <h1 className="text-6xl font-extrabold mb-10 ">{authedUser}</h1>
+                </div>
+              </hgroup>
+              <Container textAlign="center">
+                <Menu fluid widths={2} style={{ width: "50%" }}>
+                  <Menu.Item
+                    active={this.state.isAnswersOpen}
+                    name="Answered Questions "
+                    onClick={this.handleOpenAnswers}
+                  />
+                  <Menu.Item
+                    active={this.state.isQuestionsOpen}
+                    name="Unanswered Questions"
+                    onClick={this.handleOpenQuestions}
+                  />
+                </Menu>
+              </Container>
+              <Container>
+                {this.state.isAnswersOpen
+                  ? questionsIds.map(q => {
                     const question = questions[q];
                     if (
                       question.optionOne.votes.includes(authedUser) ||
@@ -64,7 +77,7 @@ class Dashboard extends Component {
                     }
                     return "";
                   })
-                : questionsIds.map(q => {
+                  : questionsIds.map(q => {
                     const question = questions[q];
                     if (
                       !(
@@ -76,12 +89,14 @@ class Dashboard extends Component {
                     }
                     return "";
                   })}
-            </Container>
-          </>
-        ) : (
-          <Redirect to="/login" />
-        )}
-      </>
+              </Container>
+            </>
+          ) : (
+            <Redirect to="/login" />
+          )}
+          <FooterDashboard />
+        </Main>
+      </div>
     );
   }
 }

@@ -19,27 +19,23 @@ class App extends React.Component {
 
   render() {
     return (
-      <Layout>
-        <Grid>
-          <Grid.Column textAlign="center" padded="100px">
-            <Router>
-              <Nav />
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/add" component={CreateQuestion} />
-                <Route path="/leaderboard" component={Leaderboard} />
-                <Route
-                  path={`/questions/${this.props.questionId}`}
-                  component={QuestionPage}
-                />
-                <Route path={`/questions/`} component={QuestionPage} />
-                <Route path="/login" component={Login} />
-                <Route component={NotFound} />
-              </Switch>
-            </Router>
-          </Grid.Column>
-        </Grid>
-      </Layout>
+      < >
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/add" component={CreateQuestion} />
+            <Route path="/leaderboard" component={Leaderboard} />
+            <Route
+              path={`/questions/${this.props.questionId}`}
+              component={QuestionPage}
+            />
+            <Route path={`/questions/`} component={QuestionPage} />
+            <Route path="/login" component={Login} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
+
+      </>
     );
   }
 }
