@@ -7,3 +7,4 @@ Would You Rather is a react application that lets a user play the “Would You R
 npm install
 npm start
 ```
+![screely-1651976579746](https://user-images.githubusercontent.com/50620277/170147640-0c3c073e-886a-4113-8e80-235479bf5e33.png)
